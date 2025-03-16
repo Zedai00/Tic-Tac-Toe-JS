@@ -79,6 +79,16 @@ main {
   align-items: end;
 }
 
+.game {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  font-size: 15px;
+  gap: 10px;
+}
+
 .row {
   display: flex;
 }
@@ -86,23 +96,29 @@ main {
 .cell {
   width: 100px;
   height: 100px;
+  padding: 10px;
   border: 1px solid #334062;
   background-color: mediumturquoise;
   border-radius: 10px;
   font-size: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+}
+
+.char {
+  font-size: 100px;
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: 15px;
+  left: 15px;
 }
 
 .info {
   background-color: mediumseagreen;
   padding: 10px;
-  width: 300px;
   border-radius: 10px;
   text-align: center;
   color: brown;
-  font-size: 20px;
   font-weight: bold;
 }
 
@@ -111,9 +127,7 @@ main {
   background-color: #6c8a6c;
   color: white;
   border-radius: 10px;
-  width: 100px;
   text-align: center;
-  font-size: 20px;
   cursor: pointer;
 }
 

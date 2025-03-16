@@ -21,6 +21,17 @@ function Board() {
     }
   };
 
+  const isFull = () => {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        if (board[i][j].getValue() === "") {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
   const printBoard = () => {
     const boardWithCellValues = board.map((row) =>
       row.map((cell) => cell.getValue()),
@@ -38,7 +49,7 @@ function Board() {
     }
   };
 
-  return { getActualBoard, putMark, printBoard, clearBoard };
+  return { getActualBoard, putMark, printBoard, clearBoard, isFull };
 }
 
 function Cell() {
@@ -172,7 +183,7 @@ function GameController(
   };
 }
 
-function ScreenController() {
+function ScreenController(playerOne, playerTwo) {
   let game = GameController();
   const infoDiv = document.querySelector(".info");
   const boardDiv = document.querySelector(".board");
@@ -192,11 +203,14 @@ function ScreenController() {
         const cellDiv = document.createElement("div");
         cellDiv.classList.add("cell");
 
-        cellDiv.dataset.row = rowIndex;
-        cellDiv.dataset.col = colIndex;
-        if (cellDiv.textContent === "") {
-          cellDiv.textContent = cell.getValue();
+        const char = document.createElement("div");
+        char.dataset.row = rowIndex;
+        char.dataset.col = colIndex;
+        char.classList.add("char");
+        if (char.textContent === "") {
+          char.textContent = cell.getValue();
         }
+        cellDiv.append(char);
         rowDiv.append(cellDiv);
       });
       boardDiv.append(rowDiv);
@@ -206,6 +220,9 @@ function ScreenController() {
       infoDiv.textContent = `${activePlayer.name} is the Grand Winner!!!`;
     } else if (activePlayer.win) {
       infoDiv.textContent = `${activePlayer.name} Win's!!!`;
+      ctrlBtn.textContent = "Next Round";
+    } else if (game.getBoard().isFull()) {
+      infoDiv.textContent = `It's A Tie`;
       ctrlBtn.textContent = "Next Round";
     } else {
       infoDiv.textContent = `${activePlayer.name}'s turn...`;
@@ -230,6 +247,8 @@ function ScreenController() {
     const cellCol = e.target.dataset.col;
 
     if (!cellRow && !cellCol) return;
+    if (e.target.textContent) return;
+    if (game.getPlayers()[0].win || game.getPlayers()[1].win) return;
 
     game.playRound(cellRow, cellCol);
     updateScreen();
@@ -243,6 +262,8 @@ function ScreenController() {
       resetGame();
     } else if (player1.win || player2.win) {
       clearGame();
+    } else if (game.getBoard().isFull()) {
+      clearGame();
     } else {
       resetGame();
     }
@@ -253,4 +274,20 @@ function ScreenController() {
   ctrlBtn.addEventListener("click", clickHandlerBtn);
 }
 
-ScreenController();
+function MenuController() {
+  const playerOne = document.querySelector("#playerOneInput").value;
+  const playerTwo = document.querySelector("#playerTwoInput").value;
+  const startBtn = document.querySelector(".start");
+  const menu = document.querySelector(".menu");
+  const game = document.querySelector(".game");
+
+  function startGame() {
+    menu.style.display = "none";
+    game.style.display = "flex";
+    ScreenController(playerOne, playerTwo);
+  }
+
+  startBtn.addEventListener("click", startGame);
+}
+
+MenuController();
