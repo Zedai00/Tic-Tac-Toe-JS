@@ -184,7 +184,17 @@ function GameController(
 }
 
 function ScreenController(playerOne, playerTwo) {
-  let game = GameController();
+  let game;
+  console.log(playerOne);
+  if (playerOne !== "" && playerTwo !== "") {
+    game = GameController(playerOne, playerTwo);
+  } else if (playerOne !== "") {
+    game = GameController(playerOne, undefined);
+  } else if (playerTwo !== "") {
+    game = GameController(undefined, playerTwo);
+  } else {
+    game = GameController();
+  }
   const infoDiv = document.querySelector(".info");
   const boardDiv = document.querySelector(".board");
   const ctrlBtn = document.querySelector(".btn");
@@ -275,8 +285,8 @@ function ScreenController(playerOne, playerTwo) {
 }
 
 function MenuController() {
-  const playerOne = document.querySelector("#playerOneInput").value;
-  const playerTwo = document.querySelector("#playerTwoInput").value;
+  const playerOne = document.querySelector("#playerOneInput");
+  const playerTwo = document.querySelector("#playerTwoInput");
   const startBtn = document.querySelector(".start");
   const menu = document.querySelector(".menu");
   const game = document.querySelector(".game");
@@ -284,7 +294,7 @@ function MenuController() {
   function startGame() {
     menu.style.display = "none";
     game.style.display = "flex";
-    ScreenController(playerOne, playerTwo);
+    ScreenController(playerOne.value, playerTwo.value);
   }
 
   startBtn.addEventListener("click", startGame);
