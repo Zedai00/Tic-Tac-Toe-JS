@@ -52,8 +52,10 @@ Tic-Tac-Toe-JS/
 [▶️ Play the game here](https://zedai00.github.io/Tic-Tac-Toe-JS/)
 
 ## 📸 Screenshots
+![image](https://github.com/user-attachments/assets/116b2932-021d-40d9-9dcb-24c6b3eb9f44)
 
-![🎮 Tic-Tac-Toe Screenshot](screenshot.png)
+![image](https://github.com/user-attachments/assets/8c93f967-7711-4160-8bb2-7da570e8eaad)
+
 
 ## 🚀 Future Improvements
 
